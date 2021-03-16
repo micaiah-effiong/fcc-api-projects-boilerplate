@@ -56,7 +56,7 @@ function dateJSON(dateDate) {
     return { error: "Invalid Date" };
   }
 
-  const unix = _date.getTime() * 1000; // unix date
+  const unix = _date.getTime(); // unix date
   const utc = _date.toUTCString(); // utc date
 
   return { unix, utc };
