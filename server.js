@@ -41,6 +41,11 @@ var listener = app.listen(process.env.PORT, function () {
 
 function dateJSON(dateDate) {
   let _date;
+
+  if (!!Number(dateDate)) {
+    dateDate = Number(dateDate);
+  }
+
   if (!dateDate) {
     _date = new Date();
   } else {
