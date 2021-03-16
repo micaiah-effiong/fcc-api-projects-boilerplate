@@ -23,14 +23,36 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
+app.get("/api/timestamp", function (req, res) {
+  const date = dateJSON();
+  return res.json(date);
+});
+
 app.get("/api/timestamp/:date", function (req, res) {
-  const _date = new Date(req.params.date);
-  const unix = _date.getTime() * 1000; // unix date
-  const utc = _date.toUTCString(); // utc date
-  res.json({ unix, utc });
+  const dateParams = req.params.date;
+  const date = dateJSON(dateParams);
+  return res.json(date);
 });
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
+
+function dateJSON(dateDate) {
+  let _date;
+  if (!dateDate) {
+    _date = new Date();
+  } else {
+    _date = new Date(dateDate);
+  }
+
+  if (_date + "" === "Invalid Date") {
+    return { error: "Invalid Date" };
+  }
+
+  const unix = _date.getTime() * 1000; // unix date
+  const utc = _date.toUTCString(); // utc date
+
+  return { unix, utc };
+}
